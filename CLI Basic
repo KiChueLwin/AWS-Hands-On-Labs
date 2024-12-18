@@ -1,0 +1,21 @@
+C:\Users\User>aws configure
+AWS Access Key ID [None]: ********************
+AWS Secret Access Key [None]: ********************
+Default region name [None]: ap-southeast-1
+Default output format [None]:
+
+C:\Users\User>aws iam list-users
+{
+    "Users": [
+        {
+            "Path": "/",
+            "UserName": "Kyal-kyal",
+            "UserId": "AIDA6ODU4USGYBWLJFJN6",
+            "Arn": "arn:aws:iam::992382592141:user/Kyal-kyal",
+            "CreateDate": "2024-12-18T08:14:49+00:00"
+        }
+    ]
+}
+
+
+C:\Users\User>
