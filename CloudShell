@@ -1,0 +1,46 @@
+[cloudshell-user@ip-10-134-66-23 ~]$ aws
+
+usage: aws [options] <command> <subcommand> [<subcommand> ...] [parameters]
+To see help text, you can run:
+
+  aws help
+  aws <command> help
+  aws <command> <subcommand> help
+
+aws: error: the following arguments are required: command
+
+[cloudshell-user@ip-10-134-66-23 ~]$ aws --version
+aws-cli/2.22.12 Python/3.12.6 Linux/6.1.115-126.197.amzn2023.x86_64 exec-env/CloudShell exe/x86_64.amzn.2023
+[cloudshell-user@ip-10-134-66-23 ~]$ aws iam list-users
+{
+    "Users": [
+        {
+            "Path": "/",
+            "UserName": "Kyal-kyal",
+            "UserId": "AIDA6ODU4USGYBWLJFJN6",
+            "Arn": "arn:aws:iam::992382592141:user/Kyal-kyal",
+            "CreateDate": "2024-12-18T08:14:49+00:00"
+        }
+    ]
+}
+[cloudshell-user@ip-10-134-66-23 ~]$ ls
+[cloudshell-user@ip-10-134-66-23 ~]$ aws iam list-users --region 
+
+usage: aws [options] <command> <subcommand> [<subcommand> ...] [parameters]
+To see help text, you can run:
+
+  aws help
+  aws <command> help
+  aws <command> <subcommand> help
+
+aws: error: argument --region: expected one argument
+
+[cloudshell-user@ip-10-134-66-23 ~]$ la
+bash: la: command not found
+[cloudshell-user@ip-10-134-66-23 ~]$ ls
+[cloudshell-user@ip-10-134-66-23 ~]$  echo "test" > demo.txt
+[cloudshell-user@ip-10-134-66-23 ~]$ cat demo.txt
+test
+[cloudshell-user@ip-10-134-66-23 ~]$ ls
+demo.txt
+[cloudshell-user@ip-10-134-66-23 ~]$ 
