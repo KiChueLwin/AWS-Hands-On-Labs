@@ -1,0 +1,23 @@
+   ,     #_
+   ~\_  ####_        Amazon Linux 2023
+  ~~  \_#####\
+  ~~     \###|
+  ~~       \#/ ___   https://aws.amazon.com/linux/amazon-linux-2023
+   ~~       V~' '->
+    ~~~         /
+      ~~._.   _/
+         _/ _/
+       _/m/'
+Last login: Fri Dec 20 06:10:37 2024 from 103.181.26.77
+[ec2-user@ip-172-31-22-88 ~]$ whoami
+ec2-user
+[ec2-user@ip-172-31-22-88 ~]$ ping google.com
+PING google.com (142.251.12.102) 56(84) bytes of data.
+64 bytes from se-in-f102.1e100.net (142.251.12.102): icmp_seq=1 ttl=59 time=1.71 ms
+64 bytes from se-in-f102.1e100.net (142.251.12.102): icmp_seq=2 ttl=59 time=1.61 ms
+64 bytes from se-in-f102.1e100.net (142.251.12.102): icmp_seq=3 ttl=59 time=1.59 ms
+64 bytes from se-in-f102.1e100.net (142.251.12.102): icmp_seq=4 ttl=59 time=1.62 ms
+^C
+--- google.com ping statistics ---
+4 packets transmitted, 4 received, 0% packet loss, time 3004ms
+rtt min/avg/max/mdev = 1.592/1.631/1.708/0.044 ms
