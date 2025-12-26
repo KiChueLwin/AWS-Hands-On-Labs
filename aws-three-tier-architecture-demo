@@ -1,0 +1,40 @@
+# AWS Three-Tier Architecture Demo
+
+## Overview
+This project implements a three-tier architecture on AWS consisting of
+a web tier, application tier, and database tier. The goal of this lab
+is to understand secure network design, instance provisioning, and
+managed database services on AWS.
+
+## Architecture
+- Public Subnet: EC2 web server
+- Private Subnet: RDS MySQL database
+- S3 bucket: static assets
+- Internet Gateway + Route Tables
+- Security Groups controlling access between tiers
+
+## AWS Services Used
+- VPC
+- EC2
+- RDS MySQL
+- S3
+- IAM
+- CloudWatch (basic monitoring)
+
+## What I Did
+- Created custom VPC with public and private subnets
+- Launched EC2 instance in public subnet
+- Created RDS MySQL in private subnet (no public access)
+- Allowed EC2 to access DB via security groups
+- Stored static files in S3 bucket
+- Tested connectivity and locking down inbound rules
+
+## Validation
+- Web application accessible from public internet
+- Database accessible only from EC2, not internet
+
+## What I Learned
+- 3-tier architecture concepts
+- Difference between security groups and NACLs
+- VPC subnet design and routing
+- Secure database design patterns
