@@ -1,0 +1,17 @@
+# AWS CloudWatch Monitoring & Alerting Lab
+
+## Overview
+Configured monitoring and alerting for EC2 instances using 
+Amazon CloudWatch and SNS notifications.
+
+## What I Did
+- Created CloudWatch alarm for EC2 CPU utilization
+- Set threshold for high CPU
+- Connected alarm to SNS topic
+- Configured email subscription notification
+- Tested alert by stress loading instance
+
+## What I Learned
+- Metrics vs logs
+- EC2 performance monitoring
+- Importance of proactive alerting
