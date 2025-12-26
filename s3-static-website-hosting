@@ -1,0 +1,17 @@
+# AWS S3 Static Website Hosting
+
+## Overview
+Hosted a static website entirely on S3 with optional CloudFront distribution.
+
+## What I Did
+- Created S3 bucket
+- Enabled static website hosting
+- Uploaded HTML files
+- Set bucket policy for public read
+- Configured static website endpoint
+- Added CloudFront + HTTPS
+
+## What I Learned
+- Difference between S3 object and static site hosting
+- Bucket policies and public access
+- Basic content delivery concepts
