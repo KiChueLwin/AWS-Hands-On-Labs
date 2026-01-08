@@ -1,0 +1,94 @@
+# This block handles all traffic for the API server, both external and internal.
+server {
+    listen 80;
+    listen [::]:80;
+    listen 443 ssl http2;
+    listen [::]:443 ssl http2;
+    server_name lms.cis.com.mm;
+
+    client_max_body_size 20M;
+
+    # This is the correct root directive for your Laravel public directory.
+    root /home/ubuntu/projects/CN_LMS_Backend_Dev/public;
+    index index.php index.html index.htm app.php;
+    
+    # This is a global setting, but it's good practice to ensure it's here
+    charset utf-8;
+
+    # SSL Configuration (managed by Certbot)
+    ssl_certificate /etc/letsencrypt/live/lms.cis.com.mm/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/lms.cis.com.mm/privkey.pem;
+    include /etc/letsencrypt/options-ssl-nginx.conf;
+    ssl_stapling off;
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem;
+
+    add_header X-Frame-Options "SAMEORIGIN";
+    add_header X-XSS-Protection "1; mode=block";
+    add_header X-Content-Type-Options "nosniff";
+
+    error_page 404 /index.php;
+
+    # This is the corrected block for routing API requests
+    location / {
+        try_files $uri $uri/ /index.php?$query_string;
+    }
+
+    # Add the uploads location block from the production server
+    location /uploads/ {
+        root /home/ubuntu/projects/CN_LMS_Backend_Dev/public/;
+        try_files $uri $uri/ =404;
+        add_header 'Access-Control-Allow-Origin' '*' always;
+        add_header 'Access-Control-Allow-Methods' 'GET, OPTIONS' always;
+        add_header 'Access-Control-Allow-Headers' '*' always;
+        add_header 'Access-Control-Expose-Headers' 'Content-Length,Content-Range' always;
+        add_header Cache-Control "public, max-age=31536000, immutable";
+        charset utf-8;
+    }
+
+    # Add the storage location block from the production server
+    location /storage/ {
+        alias /home/ubuntu/projects/CN_LMS_Backend_Dev/storage/app/public/;
+        try_files $uri $uri/ =404;
+        add_header 'Access-Control-Allow-Origin' '*' always;
+        add_header 'Access-Control-Allow-Methods' 'GET, OPTIONS' always;
+        add_header 'Access-Control-Allow-Headers' '*' always;
+        add_header 'Access-Control-Expose-Headers' 'Content-Length,Content-Range' always;
+        add_header Cache-Control "public, max-age=31536000, immutable";
+        charset utf-8;
+    }
+
+    # Add the school_logos location block from the production server
+    location /school_logos/ {
+        alias /home/ubuntu/projects/CN_LMS_Backend_Dev/public/school_logos/;
+        try_files $uri $uri/ =404;
+        add_header 'Access-Control-Allow-Origin' '*' always;
+        add_header 'Access-Control-Allow-Methods' 'GET, OPTIONS' always;
+        add_header 'Access-Control-Allow-Headers' '*' always;
+        add_header 'Access-Control-Expose-Headers' 'Content-Length,Content-Range' always;
+        add_header Cache-Control "public, max-age=31536000, immutable";
+        charset utf-8;
+    }
+
+    # This is the key block for fixing the "Primary script unknown" error.
+    # The SCRIPT_FILENAME is set using the standard Nginx variable $document_root,
+    # which points to the root directory defined above.
+    location ~ \.php$ {
+        fastcgi_pass unix:/var/run/php/php8.2-fpm.sock;
+        fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+        include fastcgi_params;
+    }
+
+    # Certbot verification for a new SSL certificate.
+    location /.well-known/acme-challenge/ {
+        root /var/www/html;
+    }
+
+    location ~ /\.env { deny all; }
+
+    location ~ /\.(?!well-known|env).* {
+        deny all;
+    }
+
+    access_log /var/log/nginx/lms.cis.com.mm_access.log;
+    error_log /var/log/nginx/lms.cis.com.mm_error.log;
+}
