@@ -1,0 +1,22 @@
+python 3.14
+
+aws lambda create-function \
+    --function-name datacenter-lambda-cli \
+    --runtime python3.14 \
+    --zip-file fileb://function.zip \
+    --handler lambda_function.lambda_handler \
+    --role arn:aws:iam::094149390529:role/lambda_execution_role
+
+aws lambda get-function --function-name datacenter-lambda-cli
+
+
+
+aws lambda update-function-code \
+  --function-name datacenter-lambda-cli \
+  --zip-file fileb://function.zip
+
+aws lambda invoke \
+  --function-name datacenter-lambda-cli \
+  res.json
+
+cat res.json
