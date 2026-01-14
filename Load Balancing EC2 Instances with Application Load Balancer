@@ -1,0 +1,10 @@
+1. Create RDS
+2. Create DB secuity for connecting with ec2 like open 3306 from EC2 security group.
+3. Create EC2
+4. Create EC2 secutity for accessign web like open HTTP and SSH to connect.
+5. Generate ssh key on jump host.
+6. Add this ssh public key on server's authorized key.
+7. Connect sever from jump host.
+8. Copy the index.php to server ( /var/www/html/ )
+9. Update this index.php with actual database credentials.
+10. Then test from both curl localhost and sever public ip on browser.
