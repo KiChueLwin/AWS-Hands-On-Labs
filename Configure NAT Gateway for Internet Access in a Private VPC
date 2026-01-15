@@ -1,0 +1,5 @@
+In a private VPC, there are two subnets such as public and private.
+Public subnet is attched to internet gateway.
+Internet gateway needs route table.
+Private subnet is attached to NAT gate way.
+NAT gate way needs Elastic IP.
