@@ -1,0 +1,27 @@
+aws kms encrypt \
+    --key-id eae9cc5e-8bb9-4c12-b95b-c8e264b27e08 \
+    --plaintext fileb://SensitiveData.txt \
+    --output text \
+    --query CiphertextBlob | base64 \
+    --decode > EncryptedData.bin
+
+aws kms decrypt \
+    --ciphertext-blob fileb://EncryptedData.bin \
+    --key-id eae9cc5e-8bb9-4c12-b95b-c8e264b27e08 \
+    --output text \
+    --query Plaintext | base64 \
+    --decode > DecryptedData.txt
+
+
+
+    1  ls
+    2  aws kms encrypt     --key-id eae9cc5e-8bb9-4c12-b95b-c8e264b27e08     --plaintext fileb://SensitiveData.txt     --output text
+    3  aws kms encrypt     --key-id eae9cc5e-8bb9-4c12-b95b-c8e264b27e08     --plaintext fileb://SensitiveData.txt     --output text --query CiphertextBlob 
+    4  aws kms encrypt     --key-id eae9cc5e-8bb9-4c12-b95b-c8e264b27e08     --plaintext fileb://SensitiveData.txt     --output text     --query CiphertextBlob | base64     --decode > EncryptedData.bin
+    5  ls
+    6  cat EncryptedData.bin 
+    7  aws kms decrypt     --ciphertext-blob fileb://EncryptedData.bin     --key-id eae9cc5e-8bb9-4c12-b95b-c8e264b27e08     --output text     --query Plaintext | base64     --decode > DecryptedData.txt
+    8  ls
+    9  cat DecryptedData.txt 
+   10  diff SensitiveData.txt DecryptedData.txt 
+   11  history
