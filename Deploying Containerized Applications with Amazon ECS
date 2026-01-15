@@ -1,0 +1,17 @@
+    1  cd pyapp/
+    2  ls
+    3  cat Dockerfile 
+    4  cat index.html 
+    5  docker build -t 128680901516.dkr.ecr.us-east-1.amazonaws.com/datacenter-ecr
+    6  docker build -t 128680901516.dkr.ecr.us-east-1.amazonaws.com/datacenter-ecr .
+    7  docker images
+    8  aws ecr get-login-password | docker login --username AWS --password-stdin 128680901516.dkr.ecr.us-east-1.amazonaws.com
+    9  docker push 128680901516.dkr.ecr.us-east-1.amazonaws.com/datacenter-ecr
+   10  history
+
+
+Create ECR
+Push Docker File
+Create ECS Cluster
+Create TaskDefination
+Create ECS Service
