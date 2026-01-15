@@ -1,0 +1,7 @@
+Create an EC2 launch template
+security group that allows HTTP traffic on port 80.
+Add a User Data script
+Create an Auto Scaling Group
+Create a target group
+Ensure the ALB is associated with the Auto Scaling Group and distributes traffic across the instances.
+ALB's DNS name is accessible and that it displays the default Nginx page served by the EC2 instances.
