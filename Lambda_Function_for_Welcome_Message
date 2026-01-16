@@ -1,0 +1,47 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: Lambda Function to Welcome message.
+
+Resources:
+
+  LambdaExecutionRole:
+    Type: AWS::IAM::Role
+    Properties:
+      RoleName: lambda_execution_role
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: lambda.amazonaws.com
+            Action: sts:AssumeRole
+      ManagedPolicyArns:
+        - arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole
+
+  LambdaFunction:
+    Type: AWS::Lambda::Function
+    Properties:
+      FunctionName: xfusion-lambda
+      Runtime: python3.9
+      Handler: index.lambda_handler
+      Role: !GetAtt LambdaExecutionRole.Arn
+      Timeout: 5
+      Code:
+        ZipFile: |
+          def lambda_handler(event, context):
+              message = "Welcome to KKE AWS Labs!"
+              return {
+                  'statusCode': 200,
+                  'body': message
+              }
+
+
+
+
+1  touch xfusion-lambda.yml
+    2  vi xfusion-lambda.yml 
+    3  aws cloudformation create-stack --stack-name xfusion-lambda-app --template-body file://xfusion-lambda.yml 
+    4  aws cloudformation create-stack --stack-name xfusion-lambda-app --template-body file://xfusion-lambda.yml --capabilities CAPABILITY_NAMED_IAM
+    5  aws cloudformation describe-stacks --stack-name xfusion-lambda-app
+    6  aws lambda invoke --function-name xfusion-lambda output.json
+    7  cat output.json 
+    8  history
