@@ -1,0 +1,8 @@
+1  sudo lsblk 
+    2  sudo growpart /dev/xvda 1
+    3  sudo lsblk 
+    4  df -h
+    5  df -hT
+    6  sudo xfs_growfs -d /
+    7  df -hT
+    8  history
