@@ -1,0 +1,41 @@
+# Download the CloudWatch Agent package
+wget https://s3.amazonaws.com/amazoncloudwatch-agent/ubuntu/amd64/latest/amazon-cloudwatch-agent.deb
+
+# Install the package
+sudo dpkg -i -E ./amazon-cloudwatch-agent.deb
+
+sudo tee /opt/aws/amazon-cloudwatch-agent/bin/config.json > /dev/null <<EOF
+{
+  "metrics": {
+    "metrics_collected": {
+      "cpu": {
+        "measurement": ["cpu_usage_idle", "cpu_usage_iowait"],
+        "metrics_collection_interval": 60
+      },
+      "mem": {
+        "measurement": ["mem_used_percent"],
+        "metrics_collection_interval": 60
+      }
+    }
+  }
+}
+EOF
+
+
+# Fetch the config and start the agent
+sudo /opt/aws/amazon-cloudwatch-agent/bin/amazon-cloudwatch-agent-ctl \
+-a fetch-config \
+-m ec2 \
+-c file:/opt/aws/amazon-cloudwatch-agent/bin/config.json \
+-s
+
+# Verify the status
+sudo /opt/aws/amazon-cloudwatch-agent/bin/amazon-cloudwatch-agent-ctl -m ec2 -a status
+
+
+# Update package lists and install stress
+sudo apt update && sudo apt install -y stress
+
+# Run the stress test (2 CPU workers, 256MB memory, for 2 minutes)
+stress --cpu 2 --vm 1 --vm-bytes 256M --timeout 120
+
