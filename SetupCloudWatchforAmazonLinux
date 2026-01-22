@@ -18,6 +18,45 @@ sudo tee /opt/aws/amazon-cloudwatch-agent/bin/config.json > /dev/null <<EOF
 }
 EOF
 
+Updated version for including EBS
+
+sudo tee /opt/aws/amazon-cloudwatch-agent/bin/config.json > /dev/null <<EOF
+{
+  "metrics": {
+    "append_dimensions": {
+      "InstanceId": "\${aws:InstanceId}"
+    },
+    "metrics_collected": {
+      "cpu": {
+        "measurement": [
+          "cpu_usage_idle",
+          "cpu_usage_iowait"
+        ],
+        "metrics_collection_interval": 60
+      },
+      "mem": {
+        "measurement": [
+          "mem_used_percent"
+        ],
+        "metrics_collection_interval": 60
+      },
+      "disk": {
+        "measurement": [
+          "disk_used_percent",
+          "disk_free",
+          "disk_total"
+        ],
+        "metrics_collection_interval": 60,
+        "resources": [
+          "*"
+        ]
+      }
+    }
+  }
+}
+EOF
+
+
 
 
 sudo /opt/aws/amazon-cloudwatch-agent/bin/amazon-cloudwatch-agent-ctl \
