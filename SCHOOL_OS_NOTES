@@ -1,0 +1,92 @@
+1. Server Preparation & PHP 8.2 Installation
+sudo apt update && sudo apt upgrade -y
+sudo apt install nginx mysql-server composer certbot python3-certbot-nginx -y
+
+# Install PHP 8.2 and required extensions
+sudo add-apt-repository ppa:ondrej/php -y
+sudo apt update
+sudo apt install php8.2 php8.2-fpm php8.2-mysql php8.2-xml php8.2-curl php8.2-mbstring php8.2-zip php8.2-gd php8.2-intl php8.2-bcmath -y
+sudo update-alternatives --set php /usr/bin/php8.2
+
+
+
+2. Database Setup
+# Create Database and User (Manual step inside MySQL)
+sudo mysql -u root -p
+
+# Import existing database backup
+mysql -u school_admin -p school_os_db < ~/school_os.sql
+
+
+3. Backend (Laravel) Deployment
+# Clone and Setup
+cd /var/www/school_os
+sudo git clone https://github.com/CentralNex/Dev_SchoolOs_Backend.git
+cd Dev_SchoolOs_Backend
+sudo chown -R ubuntu:ubuntu .
+
+# Environment and Dependencies
+cp .env.example .env
+nano .env  # Edit your DB and App credentials
+composer install
+php artisan key:generate
+php artisan migrate
+php artisan storage:link
+
+# Permissions for Web Server
+sudo chown -R www-data:www-data /var/www/school_os/Dev_SchoolOs_Backend
+sudo chmod -R 775 storage bootstrap/cache public/uploads
+
+
+
+4. Flutter SDK Setup
+cd ~
+git clone --filter=blob:none --branch stable https://github.com/flutter/flutter.git
+echo 'export PATH="$PATH:/home/ubuntu/flutter/bin"' >> ~/.bashrc
+source ~/.bashrc
+
+# Ensure specific working version
+cd ~/flutter
+git checkout 3.38.9
+flutter doctor
+
+
+
+5. Frontend (Flutter Web) Deployment
+cd /var/www/school_os
+git clone https://github.com/CentralNex/Dev_SchoolOs_Web.git Dev_SchoolOs_Frontend
+cd Dev_SchoolOs_Frontend
+
+# Clean build and compile
+flutter clean
+flutter pub get
+flutter build web --release
+
+# Final Folder Permissions for Nginx
+sudo chown -R ubuntu:ubuntu /var/www/school_os/Dev_SchoolOs_Frontend/build/web
+sudo chmod -R 755 /var/www/school_os/Dev_SchoolOs_Frontend/build/web
+
+
+
+
+
+6. Nginx & SSL Configuration
+# Create Frontend Config
+sudo nano /etc/nginx/sites-available/school_frontend
+# (Inside: set root to /var/www/school_os/Dev_SchoolOs_Frontend/build/web)
+
+# Enable configs and restart
+sudo ln -s /etc/nginx/sites-available/school_frontend /etc/nginx/sites-enabled/
+sudo rm /etc/nginx/sites-enabled/default
+sudo nginx -t
+sudo systemctl restart nginx
+
+# SSL via Certbot
+sudo certbot --nginx -d school.centralnex.com
+sudo certbot --nginx -d schoolapi.centralnex.com
+
+
+
+
+
+
