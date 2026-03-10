@@ -1,0 +1,30 @@
+Update the file size limit   <---------------------------------
+sudo nano /etc/nginx/nginx.conf 
+In the block of http{}, add this client_max_body_size 100M;
+sudo nano /etc/nginx/sites-available/(web_conf)
+add these 
+server {
+    listen 8000;
+    client_max_body_size 100M;
+    ...
+}
+server {
+    listen 8001;
+    client_max_body_size 100M;
+    ...
+}
+sudo nginx -t
+sudo systemctl restart nginx
+in the /etc/php/8.2/fpm/php.ini, change these two lines 
+post_max_size = 100M
+upload_max_filesize = 100M
+
+
+Remote Migration <--------------------------------------------
+sudo nano /etc/mysql/mysql.conf.d/mysqld.cnf
+Look for the line: bind-address = 127.0.0.1
+Change 127.0.0.1 to 0.0.0.0
+
+
+Generate JWT Token <--------------------------------------------------------
+php artisan jwt:secret
