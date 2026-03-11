@@ -28,3 +28,18 @@ Change 127.0.0.1 to 0.0.0.0
 
 Generate JWT Token <--------------------------------------------------------
 php artisan jwt:secret
+
+
+Photos folders permissions <-----------------------------------------------
+sudo nano /etc/nginx/site-availables/conf_name
+# Add this block to serve storage files
+    location /storage {
+        alias /var/www/mob/SCF_Dev_Backend/storage/app/public;
+        try_files $uri $uri/ =404;
+    }
+sudo chown -R www-data:www-data /var/www/mob/SCF_Dev_Backend/storage
+sudo chmod -R 775 /var/www/mob/SCF_Dev_Backend/storage
+cd /var/www/mob/SCF_Dev_Backend
+php artisan storage:link
+sudo nginx -t
+sudo systemctl restart nginx
