@@ -1,0 +1,4 @@
+1. attach IAM role to EC2 
+
+2. Add the inbound 3000 to security group 
+
