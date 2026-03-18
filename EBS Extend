@@ -1,0 +1,8 @@
+sudo journalctl --vacuum-time=1d  ( clear the cache if the previous storage is totally full ) 
+
+2. Retry growpart
+sudo growpart /dev/nvme0n1 1
+
+3. Resize filesystem
+sudo resize2fs /dev/nvme0n1p1
+
